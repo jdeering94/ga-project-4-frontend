@@ -1,13 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import Navbar from './Navbar';
 
 import '../styles/style.scss';
 
 const App = () => (
   <BrowserRouter>
-    {/* <Navbar /> */}
+    <Navbar />
     <Routes>
-      <Route path="/" element={<h1>Welcome to Song to Film!</h1>} />
+      <Route path="/" element={<Home />} />
     </Routes>
   </BrowserRouter>
 );
