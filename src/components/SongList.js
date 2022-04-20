@@ -4,40 +4,42 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import { getAllArtists } from '../api/artists';
+import { getAllSongs } from '../api/songs';
 import { Link } from 'react-router-dom';
 
-const ArtistList = () => {
-  const [artists, setArtists] = React.useState(null);
+const SongList = () => {
+  const [songs, setSongs] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
-      const artists = await getAllArtists();
-      setArtists(
-        artists.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
+      const songs = await getAllSongs();
+      setSongs(
+        songs.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
       );
     };
     getData();
   }, []);
 
+  console.log(songs);
+
   return (
     <>
-      <h1>All Artists</h1>
-      {artists ? (
+      <h1>All Songs</h1>
+      {songs ? (
         <div className="container mx-auto px-10 flex">
-          {artists.map((artist) => (
-            <Card key={artist.id} sx={{ maxWidth: 345 }}>
+          {songs.map((song) => (
+            <Card key={song.id} sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <Link to="/">
                   <CardMedia
                     component="img"
                     height="140"
-                    image={artist.image}
-                    alt={artist.title}
+                    image={song.album.image}
+                    alt={song.name}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                      {artist.name}
+                      {song.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       {/* Lizards are a widespread group of squamate reptiles,
@@ -62,4 +64,4 @@ const ArtistList = () => {
   );
 };
 
-export default ArtistList;
+export default SongList;

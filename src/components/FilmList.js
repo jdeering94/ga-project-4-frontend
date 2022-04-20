@@ -1,5 +1,11 @@
 import React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 import { getAllFilms } from '../api/films';
+import { Link } from 'react-router-dom';
 
 const FilmList = () => {
   const [films, setFilms] = React.useState(null);
@@ -20,23 +26,36 @@ const FilmList = () => {
     <>
       <h1>All Films</h1>
       {films ? (
-        <div className="container">
-          <div className="columns is-multiline">
-            {films.map((film) => (
-              <div key={film.id} className="column card m-5 is-one-fifth">
-                <div className="card-image">
-                  <figure className="image is-4by5">
-                    <img src={film.image} alt={film.title} />
-                  </figure>
-                  <div className="is-flex is-justify-content-space-between">
-                    <p className="card-text">
-                      <strong>{film.title}</strong>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="container mx-auto px-10 flex">
+          {films.map((film) => (
+            <Card key={film.id} sx={{ maxWidth: 345 }}>
+              <CardActionArea>
+                <Link to="/">
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={film.image}
+                    alt={film.title}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {film.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {/* Lizards are a widespread group of squamate reptiles,
+                        with over 6,000 species, ranging across all continents
+                        except Antarctica */}
+                    </Typography>
+                  </CardContent>
+                </Link>
+              </CardActionArea>
+              <CardActions>
+                <Button size="small" color="primary">
+                  Like
+                </Button>
+              </CardActions>
+            </Card>
+          ))}
         </div>
       ) : (
         <p>Loading...</p>

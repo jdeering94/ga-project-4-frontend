@@ -1,68 +1,73 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 
-const Navbar = () => {
+export default function Navbar({ fixed }) {
+  const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
-      <div className="navbar-brand">
-        <a
-          role="button"
-          className="navbar-burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-
-      <div id="navbarBasicExample" className="navbar-menu">
-        <div className="navbar-start">
-          <Link to="/" className="navbar-item">
-            Home
-          </Link>
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">Browse</a>
-            <div className="navbar-dropdown">
-              <Link to="browse/artists" className="navbar-item">
-                By Artist
-              </Link>
-              <Link to="browse/films" className="navbar-item">
-                By Film
-              </Link>
-            </div>
+    <>
+      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-indigo-500 mb-3">
+        <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+            <Link
+              to="/"
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
+            >
+              Song to Film
+            </Link>
+            <button
+              className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+              type="button"
+              onClick={() => setNavbarOpen(!navbarOpen)}
+            >
+              <i className="fas fa-bars"></i>
+            </button>
           </div>
-
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">More</a>
-
-            <div className="navbar-dropdown">
-              <Link to="/about" className="navbar-item">
-                About
-              </Link>
-              <a className="navbar-item">Jobs</a>
-              <a className="navbar-item">Contact</a>
-              <hr className="navbar-divider" />
-              <a className="navbar-item">Report an issue</a>
-            </div>
+          <div
+            className={
+              'lg:flex flex-grow items-center' +
+              (navbarOpen ? 'flex' : 'hidden')
+            }
+            id="example-navbar-danger"
+          >
+            <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+              <li className="nav-item">
+                <PopupState variant="popover" popupId="demo-popup-menu">
+                  {(popupState) => (
+                    <>
+                      <Button variant="contained" {...bindTrigger(popupState)}>
+                        Browse
+                      </Button>
+                      <Menu {...bindMenu(popupState)}>
+                        <MenuItem onClick={popupState.close}>
+                          <Link to="/browse/artists">By Artist</Link>
+                        </MenuItem>
+                        <MenuItem onClick={popupState.close}>
+                          <Link to="/browse/films">By Film</Link>
+                        </MenuItem>
+                        <MenuItem onClick={popupState.close}>
+                          <Link to="/browse/songs">By Song</Link>
+                        </MenuItem>
+                      </Menu>
+                    </>
+                  )}
+                </PopupState>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/about"
+                  className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                >
+                  About
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
-
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <a className="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a className="button is-light">Log in</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
-};
-
-export default Navbar;
+}
