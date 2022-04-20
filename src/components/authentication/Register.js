@@ -35,7 +35,7 @@ const Register = () => {
 
           <button
             type="submit"
-            className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+            className="w-full text-center py-3 rounded bg-black text-white hover:bg-white focus:outline-none my-1"
           >
             Create Account
           </button>
