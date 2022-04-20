@@ -28,7 +28,7 @@ const FilmList = () => {
       {films ? (
         <div className="container mx-auto px-10 flex">
           {films.map((film) => (
-            <Card key={film.id} sx={{ maxWidth: 345 }}>
+            <Card className="mx-10" key={film.id} sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <Link to="/">
                   <CardMedia

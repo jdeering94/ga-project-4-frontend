@@ -28,7 +28,7 @@ const SongList = () => {
       {songs ? (
         <div className="container mx-auto px-10 flex">
           {songs.map((song) => (
-            <Card key={song.id} sx={{ maxWidth: 345 }}>
+            <Card className="mx-10" key={song.id} sx={{ maxWidth: 345 }}>
               <CardActionArea>
                 <Link to="/">
                   <CardMedia
