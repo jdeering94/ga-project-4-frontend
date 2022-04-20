@@ -23,10 +23,17 @@ const Navbar = () => {
           <Link to="/" className="navbar-item">
             Home
           </Link>
-
-          <Link to="/browse" className="navbar-item">
-            Browse
-          </Link>
+          <div className="navbar-item has-dropdown is-hoverable">
+            <a className="navbar-link">Browse</a>
+            <div className="navbar-dropdown">
+              <Link to="browse/artists" className="navbar-item">
+                By Artist
+              </Link>
+              <Link to="browse/films" className="navbar-item">
+                By Film
+              </Link>
+            </div>
+          </div>
 
           <div className="navbar-item has-dropdown is-hoverable">
             <a className="navbar-link">More</a>
