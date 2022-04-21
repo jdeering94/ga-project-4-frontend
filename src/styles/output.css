@@ -510,6 +510,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   position: relative;
 }
 
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;

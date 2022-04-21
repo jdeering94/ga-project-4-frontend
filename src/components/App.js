@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import ArtistList from './ArtistList';
 import FilmList from './FilmList';
 import SongList from './SongList';
+import Footer from './Footer';
 
 import '../styles/style.scss';
 import Login from './authentication/login';
@@ -25,6 +26,7 @@ const App = () => (
       <Route path="/songs/:songId" element={<ShowSong />} />
       <Route path="/films/:filmId" element={<ShowFilm />} />
     </Routes>
+    <Footer />
   </BrowserRouter>
 );
 
