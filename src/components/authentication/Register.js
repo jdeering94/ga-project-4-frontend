@@ -82,7 +82,7 @@ const Register = () => {
 
             <input
               type="submit"
-              className="w-full text-center py-3 rounded bg-black text-white hover:bg-white focus:outline-none my-1"
+              className="w-full text-center py-3 rounded bg-black text-white hover:bg-blue-600 focus:outline-none my-1"
               value="Create Account"
             />
           </form>

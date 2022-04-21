@@ -30,7 +30,7 @@ const FilmList = () => {
           {films.map((film) => (
             <Card className="mx-10" key={film.id} sx={{ maxWidth: 345 }}>
               <CardActionArea>
-                <Link to="/">
+                <Link to={`/films/${film.id}`}>
                   <CardMedia
                     component="img"
                     height="140"

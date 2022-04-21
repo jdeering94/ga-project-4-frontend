@@ -30,7 +30,7 @@ const SongList = () => {
           {songs.map((song) => (
             <Card className="mx-10" key={song.id} sx={{ maxWidth: 345 }}>
               <CardActionArea>
-                <Link to="/">
+                <Link to={`/songs/${song.id}`}>
                   <CardMedia
                     component="img"
                     height="140"

@@ -10,3 +10,12 @@ export const getAllSongs = async () => {
   const { data } = await axios.request(options);
   return data;
 };
+export const getSongById = async (songId) => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl}/song-to-film/song-detail/${songId}`,
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};

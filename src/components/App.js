@@ -9,6 +9,8 @@ import SongList from './SongList';
 import '../styles/style.scss';
 import Login from './authentication/login';
 import Register from './authentication/register';
+import ShowSong from './ShowSong';
+import ShowFilm from './ShowFilm';
 
 const App = () => (
   <BrowserRouter>
@@ -20,6 +22,8 @@ const App = () => (
       <Route path="/browse/songs" element={<SongList />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/songs/:songId" element={<ShowSong />} />
+      <Route path="/films/:filmId" element={<ShowFilm />} />
     </Routes>
   </BrowserRouter>
 );

@@ -64,6 +64,25 @@ export default function Navbar({ fixed }) {
                   About
                 </Link>
               </li>
+              <li className="nav-item">
+                <PopupState variant="popover" popupId="demo-popup-menu">
+                  {(popupState) => (
+                    <>
+                      <Button variant="contained" {...bindTrigger(popupState)}>
+                        User
+                      </Button>
+                      <Menu {...bindMenu(popupState)}>
+                        <MenuItem onClick={popupState.close}>
+                          <Link to="/register">Sign Up</Link>
+                        </MenuItem>
+                        <MenuItem onClick={popupState.close}>
+                          <Link to="/login">Login</Link>
+                        </MenuItem>
+                      </Menu>
+                    </>
+                  )}
+                </PopupState>
+              </li>
             </ul>
           </div>
         </div>
