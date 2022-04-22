@@ -7,20 +7,25 @@ import { CardActionArea } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { getSongById } from '../api/songs';
 import { Link } from 'react-router-dom';
+import { getAllContextsForSong } from '../api/contexts';
 
 const ShowSong = () => {
   const { songId } = useParams();
   const [song, setSong] = React.useState(null);
+  const [songContexts, setSongContexts] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
       const songdata = await getSongById(songId);
       setSong(songdata);
+
+      const contextData = await getAllContextsForSong(songId);
+      setSongContexts(contextData);
     };
     getData();
   }, []);
 
-  console.log(song);
+  console.log(songContexts);
 
   if (!song) {
     return <p>Loading...</p>;
@@ -71,10 +76,19 @@ const ShowSong = () => {
                       <Typography gutterBottom variant="h5" component="div">
                         {film.title}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        This needs to be film/song context for film {film.id}
-                        and song {song.id}
-                      </Typography>
+
+                      {songContexts
+                        ?.filter((item) => item.film.id === film.id)
+
+                        .map((context) => (
+                          <Typography
+                            key={context.id}
+                            variant="body2"
+                            color="text.secondary"
+                          >
+                            {context.usage}
+                          </Typography>
+                        ))}
                     </CardContent>
                   </Link>
                 </CardActionArea>
