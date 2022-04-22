@@ -12,6 +12,7 @@ import Login from './authentication/login';
 import Register from './authentication/register';
 import ShowSong from './ShowSong';
 import ShowFilm from './ShowFilm';
+import Profile from './Profile';
 
 const App = () => (
   <BrowserRouter>
@@ -25,6 +26,7 @@ const App = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/songs/:songId" element={<ShowSong />} />
       <Route path="/films/:filmId" element={<ShowFilm />} />
+      <Route path="/users/profile/" element={<Profile />} />
     </Routes>
     <Footer />
   </BrowserRouter>

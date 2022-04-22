@@ -6,9 +6,11 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import { getAllSongs } from '../api/songs';
 import { Link } from 'react-router-dom';
+import { getUserData } from '../api/auth';
 
 const SongList = () => {
   const [songs, setSongs] = React.useState(null);
+  const [userData, setUserData] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -16,11 +18,13 @@ const SongList = () => {
       setSongs(
         songs.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
       );
+      if (window.sessionStorage.token) {
+        const user = await getUserData();
+        setUserData(user);
+      }
     };
     getData();
   }, []);
-
-  console.log(songs);
 
   return (
     <>
@@ -50,9 +54,11 @@ const SongList = () => {
                 </Link>
               </CardActionArea>
               <CardActions>
-                <Button size="small" color="primary">
-                  Like
-                </Button>
+                {userData && (
+                  <Button size="small" color="primary">
+                    Like
+                  </Button>
+                )}
               </CardActions>
             </Card>
           ))}

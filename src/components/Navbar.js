@@ -96,7 +96,7 @@ export default function Navbar({ fixed }) {
                         )}
                         {userId && (
                           <MenuItem onClick={popupState.close}>
-                            <Link to={`/profile/${userId}`}>Profile</Link>
+                            <Link to={'/users/profile/'}>{username}</Link>
                           </MenuItem>
                         )}
                         {userId && (

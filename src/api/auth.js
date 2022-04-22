@@ -37,3 +37,42 @@ export const removeToken = () => {
 export const removeUserId = () => {
   window.sessionStorage.removeItem('userId');
 };
+
+export const getUserData = async () => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl}/authentication/credentials/`,
+    headers: {
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
+    },
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};
+
+export const addLikedFilm = async (songId) => {
+  const options = {
+    method: 'POST',
+    url: `${baseUrl}/authentication/users/add-liked-song/?songId=${songId}`,
+    headers: {
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
+    },
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};
+
+export const removeLikedFilm = async (songId) => {
+  const options = {
+    method: 'PUT',
+    url: `${baseUrl}/authentication/users/add-liked-song/?songId=${songId}`,
+    headers: {
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
+    },
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};
