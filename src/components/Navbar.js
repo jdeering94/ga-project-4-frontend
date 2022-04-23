@@ -22,7 +22,7 @@ export default function Navbar({ fixed }) {
 
   return (
     <>
-      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-indigo-500 mb-3">
+      <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-blue-500 mb-3">
         <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
             <Link
@@ -108,6 +108,39 @@ export default function Navbar({ fixed }) {
                     </>
                   )}
                 </PopupState>
+              </li>
+              <li className="nav-item">
+                {userId && (
+                  <PopupState variant="popover" popupId="demo-popup-menu">
+                    {(popupState) => (
+                      <>
+                        <Button
+                          variant="contained"
+                          {...bindTrigger(popupState)}
+                        >
+                          Create
+                        </Button>
+                        <Menu {...bindMenu(popupState)}>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to={'/create/song/'}>Add Song</Link>
+                          </MenuItem>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to={'/create/film/'}>Add Film</Link>
+                          </MenuItem>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to={'/create/artist/'}>Add Artist</Link>
+                          </MenuItem>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to={'/create/album/'}>Add Album</Link>
+                          </MenuItem>
+                          <MenuItem onClick={popupState.close}>
+                            <Link to={'/create/context/'}>Add Context</Link>
+                          </MenuItem>
+                        </Menu>
+                      </>
+                    )}
+                  </PopupState>
+                )}
               </li>
             </ul>
           </div>

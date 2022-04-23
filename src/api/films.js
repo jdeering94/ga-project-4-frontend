@@ -20,3 +20,14 @@ export const getFilmById = async (filmId) => {
   const { data } = await axios.request(options);
   return data;
 };
+
+export const createFilm = async (filmData) => {
+  const options = {
+    method: 'POST',
+    url: `${baseUrl}/song-to-film/film-list/`,
+    data: filmData,
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};

@@ -13,6 +13,11 @@ import Register from './authentication/register';
 import ShowSong from './ShowSong';
 import ShowFilm from './ShowFilm';
 import Profile from './Profile';
+import Song from './create/Song';
+import Artist from './create/Artist';
+import Album from './create/Album';
+import Film from './create/Film';
+import Context from './create/Context';
 
 const App = () => (
   <BrowserRouter>
@@ -27,6 +32,11 @@ const App = () => (
       <Route path="/songs/:songId" element={<ShowSong />} />
       <Route path="/films/:filmId" element={<ShowFilm />} />
       <Route path="/users/profile/" element={<Profile />} />
+      <Route path="/create/song/" element={<Song />} />
+      <Route path="/create/artist/" element={<Artist />} />
+      <Route path="/create/album/" element={<Album />} />
+      <Route path="/create/film/" element={<Film />} />
+      <Route path="/create/context/" element={<Context />} />
     </Routes>
     <Footer />
   </BrowserRouter>

@@ -510,11 +510,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   position: relative;
 }
 
-.sticky {
-  position: -webkit-sticky;
-  position: sticky;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -642,9 +637,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-color: transparent;
 }
 
-.bg-indigo-500 {
+.bg-blue-500 {
   --tw-bg-opacity: 1;
-  background-color: rgb(99 102 241 / var(--tw-bg-opacity));
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-transparent {
@@ -778,6 +773,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .hover\:bg-blue-600:hover {
