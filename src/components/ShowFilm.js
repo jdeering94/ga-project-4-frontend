@@ -22,7 +22,7 @@ const ShowSong = () => {
 
   return (
     <>
-      <h1>this is a song page for {film.id}</h1>
+      <h1>this is a film page for {film.title}</h1>
       <div className="flex">
         <div className="image">
           <figure className="image">

@@ -1,5 +1,5 @@
-export function isLiked(userId, song) {
-  if (song.liked_by.includes(userId)) {
+export function isLiked(user, song) {
+  if (user.liked_songs.includes(song.id)) {
     return true;
   } else return false;
 }

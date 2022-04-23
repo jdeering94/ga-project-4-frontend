@@ -3,16 +3,22 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, CardActions, Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { getSongById } from '../api/songs';
 import { Link } from 'react-router-dom';
 import { getAllContextsForSong } from '../api/contexts';
+import { getUserData } from '../api/auth';
+import { isLiked } from '../lib/favourites';
+import { addLikedSong, removeLikedSong } from '../api/auth';
+import Spotify from 'react-spotify-embed';
 
 const ShowSong = () => {
   const { songId } = useParams();
   const [song, setSong] = React.useState(null);
   const [songContexts, setSongContexts] = React.useState(null);
+  const [userData, setUserData] = React.useState(null);
+  const [liked, setLiked] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -21,25 +27,68 @@ const ShowSong = () => {
 
       const contextData = await getAllContextsForSong(songId);
       setSongContexts(contextData);
+      if (window.sessionStorage.token) {
+        const user = await getUserData();
+        setUserData(user);
+        setLiked(isLiked(user, songdata));
+      }
     };
     getData();
   }, []);
-
-  console.log(songContexts);
 
   if (!song) {
     return <p>Loading...</p>;
   }
 
+  console.log('song is liked by', song.liked_by);
+
+  const handleLikeButton = async () => {
+    if (
+      song.liked_by.filter((item) => item.username === userData.username)
+        .length > 0
+    ) {
+      console.log('removing like');
+      await removeLikedSong(song.id);
+      const songdata = await getSongById(songId);
+      setSong(songdata);
+      const user = await getUserData();
+      setUserData(user);
+    } else {
+      const data = await addLikedSong(song.id);
+      setUserData(data);
+      const songdata = await getSongById(songId);
+      setSong(songdata);
+      const user = await getUserData();
+      setUserData(user);
+    }
+  };
+
   return (
     <>
-      <h1>this is a song page for {song.id}</h1>
+      <h1>this is a song page for {song.name}</h1>
       <div className="flex">
         <div className="image">
-          <figure className="image">
-            <img src={song.album.image} alt={song.album.image} />
-          </figure>
-          <h1>{song.name}</h1>
+          <Card>
+            <CardMedia
+              component="img"
+              height="140"
+              image={song.album.image}
+              alt={song.name}
+              sx={{ maxHeight: 300, maxWidth: 300 }}
+            />
+          </Card>
+          <CardActions>
+            {userData && (
+              <Button size="small" color="primary" onClick={handleLikeButton}>
+                {song.liked_by.filter(
+                  (item) => item.username === userData.username
+                ).length > 0
+                  ? '♥'
+                  : '♡'}
+              </Button>
+            )}
+            <Spotify wide link={song.spotify_link} />
+          </CardActions>
         </div>
         <div className="information card">
           <h2 className="name">{song.name}</h2>

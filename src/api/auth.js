@@ -51,7 +51,7 @@ export const getUserData = async () => {
   return data;
 };
 
-export const addLikedFilm = async (songId) => {
+export const addLikedSong = async (songId) => {
   const options = {
     method: 'POST',
     url: `${baseUrl}/authentication/users/add-liked-song/?songId=${songId}`,
@@ -64,10 +64,10 @@ export const addLikedFilm = async (songId) => {
   return data;
 };
 
-export const removeLikedFilm = async (songId) => {
+export const removeLikedSong = async (songId) => {
   const options = {
     method: 'PUT',
-    url: `${baseUrl}/authentication/users/add-liked-song/?songId=${songId}`,
+    url: `${baseUrl}/authentication/users/remove-liked-song/?songId=${songId}`,
     headers: {
       authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
     },
