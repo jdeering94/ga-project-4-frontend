@@ -26,46 +26,60 @@ const SongList = () => {
     getData();
   }, []);
 
+  if (!songs) return <h1>Loading...</h1>;
+  if (!userData) return <h1>Loading</h1>;
+  console.log(userData.liked_songs[0].id);
+
   return (
     <>
       <h1>All Songs</h1>
-      {songs ? (
-        <div className="container mx-auto px-10 flex">
-          {songs.map((song) => (
-            <Card className="mx-10" key={song.id} sx={{ maxWidth: 345 }}>
-              <CardActionArea>
-                <Link to={`/songs/${song.id}`}>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={song.album.image}
-                    alt={song.name}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {song.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {/* Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica */}
-                    </Typography>
-                  </CardContent>
-                </Link>
-              </CardActionArea>
-              <CardActions>
-                {userData && (
-                  <Button size="small" color="primary">
-                    Like
+
+      <div className="container mx-auto px-10 flex">
+        {songs.map((song) => (
+          <Card className="mx-10" key={song.id} sx={{ maxWidth: 345 }}>
+            <CardActionArea>
+              <Link to={`/songs/${song.id}`}>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={song.album.image}
+                  alt={song.name}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {song.name}
+                  </Typography>
+                </CardContent>
+              </Link>
+            </CardActionArea>
+            <CardActions>
+              {/* {userData && (
+                <Button size="small" color="primary">
+                  Like
+                </Button> */}
+              {/* )} */}
+              {/* {userData.liked_songs
+                ?.filter((item) => item.id === song.id)
+
+                .map((like) => (
+                  <Button key={like.id} size="small" color="primary">
+                    unLike
                   </Button>
-                )}
-              </CardActions>
-            </Card>
-          ))}
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+                ))} */}
+            </CardActions>
+            {song.liked_by.length > 0 && (
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                className="px-10"
+              >
+                ❤️{song.liked_by.length}
+              </Typography>
+            )}
+          </Card>
+        ))}
+      </div>
     </>
   );
 };
