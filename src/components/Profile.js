@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Carousel from 'react-material-ui-carousel';
 import Container from '@mui/material/Container';
 import { getUserData } from '../api/auth';
-import { Card, CardContent, CardMedia, CardActionArea } from '@mui/material';
+import { Card, CardMedia, CardActionArea } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 
