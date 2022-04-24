@@ -19,3 +19,23 @@ export const getAllContextsForSong = async (songId) => {
   const { data } = await axios.request(options);
   return data;
 };
+export const getAllContextsForFilm = async (filmId) => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl}/song-to-film/film-contexts/?filmId=${filmId}`,
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};
+
+export const createContext = async (contextData) => {
+  const options = {
+    method: 'POST',
+    url: `${baseUrl}/song-to-film/contexts/`,
+    data: contextData,
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};

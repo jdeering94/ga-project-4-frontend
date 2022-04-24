@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions, Button } from '@mui/material';
+import { CardActionArea, CardActions, Button, Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { getSongById } from '../api/songs';
 import { Link } from 'react-router-dom';
@@ -18,7 +18,7 @@ const ShowSong = () => {
   const [song, setSong] = React.useState(null);
   const [songContexts, setSongContexts] = React.useState(null);
   const [userData, setUserData] = React.useState(null);
-  const [liked, setLiked] = React.useState(null);
+  // const [liked, setLiked] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -30,7 +30,7 @@ const ShowSong = () => {
       if (window.sessionStorage.token) {
         const user = await getUserData();
         setUserData(user);
-        setLiked(isLiked(user, songdata));
+        // setLiked(isLiked(user, songdata));
       }
     };
     getData();
@@ -39,8 +39,6 @@ const ShowSong = () => {
   if (!song) {
     return <p>Loading...</p>;
   }
-
-  console.log('song is liked by', song.liked_by);
 
   const handleLikeButton = async () => {
     if (
@@ -66,17 +64,17 @@ const ShowSong = () => {
   return (
     <>
       <h1>this is a song page for {song.name}</h1>
-      <div className="flex">
-        <div className="image">
-          <Card>
-            <CardMedia
-              component="img"
-              height="140"
-              image={song.album.image}
-              alt={song.name}
-              sx={{ maxHeight: 300, maxWidth: 300 }}
-            />
-          </Card>
+      <Container maxWidth="sm">
+        <div className="image m-10">
+          {/* <Card> */}
+          <CardMedia
+            component="img"
+            height="140"
+            image={song.album.image}
+            alt={song.name}
+            sx={{ maxHeight: 300, maxWidth: 300 }}
+          />
+          {/* </Card> */}
           <CardActions>
             {userData && (
               <Button size="small" color="primary" onClick={handleLikeButton}>
@@ -90,62 +88,64 @@ const ShowSong = () => {
             <Spotify wide link={song.spotify_link} />
           </CardActions>
         </div>
-        <div className="information card">
-          <h2 className="name">{song.name}</h2>
-          <p>
-            <strong>Artist:</strong> {song.artist.name}
-          </p>
-          <p>
-            <strong>Album: </strong>
-            {song.album.name}
-          </p>
-          <p>
-            <strong>Released in:</strong> {song.year}
-          </p>
-          <p>
-            <strong>Description:</strong> {song.description}
-          </p>
-          <p>
-            <strong>Likes:</strong> {song.liked_by.length}
-          </p>
-          <div className="film-info">
-            <strong>Used in:</strong>
-            {song.films.map((film) => (
-              <Card key={film.title} sx={{ maxWidth: 345, maxHeight: 250 }}>
-                <CardActionArea>
-                  <Link to={`/films/${film.id}`}>
-                    <CardMedia
-                      component="img"
-                      height="140"
-                      image={film.image}
-                      alt={film.title}
-                      sx={{ maxHeight: 100, maxWidth: 100 }}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {film.title}
-                      </Typography>
+        <div className="flex">
+          <div className="information card">
+            <h2 className="name">{song.name}</h2>
+            <p>
+              <strong>Artist:</strong> {song.artist.name}
+            </p>
+            <p>
+              <strong>Album: </strong>
+              {song.album.name}
+            </p>
+            <p>
+              <strong>Released in:</strong> {song.year}
+            </p>
+            <p>
+              <strong>Description:</strong> {song.description}
+            </p>
+            <p>
+              <strong>Likes:</strong> {song.liked_by.length}
+            </p>
+            <div className="film-info">
+              <strong>Used in:</strong>
+              {song.films.map((film) => (
+                <Card key={film.title} sx={{ maxWidth: 345, maxHeight: 250 }}>
+                  <CardActionArea>
+                    <Link to={`/films/${film.id}`}>
+                      <CardMedia
+                        component="img"
+                        height="140"
+                        image={film.image}
+                        alt={film.title}
+                        sx={{ maxHeight: 100, maxWidth: 100 }}
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {film.title}
+                        </Typography>
 
-                      {songContexts
-                        ?.filter((item) => item.film.id === film.id)
+                        {songContexts
+                          ?.filter((item) => item.film.id === film.id)
 
-                        .map((context) => (
-                          <Typography
-                            key={context.id}
-                            variant="body2"
-                            color="text.secondary"
-                          >
-                            {context.usage}
-                          </Typography>
-                        ))}
-                    </CardContent>
-                  </Link>
-                </CardActionArea>
-              </Card>
-            ))}
+                          .map((context) => (
+                            <Typography
+                              key={context.id}
+                              variant="body2"
+                              color="text.secondary"
+                            >
+                              {context.usage}
+                            </Typography>
+                          ))}
+                      </CardContent>
+                    </Link>
+                  </CardActionArea>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </Container>
     </>
   );
 };
