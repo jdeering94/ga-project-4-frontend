@@ -19,3 +19,14 @@ export const getSongById = async (songId) => {
   const { data } = await axios.request(options);
   return data;
 };
+
+export const createSong = async (songData) => {
+  const options = {
+    method: 'POST',
+    url: `${baseUrl}/song-to-film/song-list/`,
+    data: songData,
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};

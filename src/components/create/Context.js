@@ -32,26 +32,19 @@ const Context = () => {
     getData();
   }, []);
 
-  // const handleSongSelect = (e) => {
-  //   console.log(e.target.value);
-  //   setSelectedSong(e.target.value);
-  // };
-  // const handleFilmSelect = (e) => {
-  //   setSelectedFilm(e.target.value);
-  // };
   const handleUsageChange = (e) => {
     setUsage(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(selectedSong, selectedFilm, usage);
-    // await createContext({
-    //   song: selectedSong.id,
-    //   film: selectedFilm.id,
-    //   usage: usage,
-    // });
-    // navigate('/');
+
+    await createContext({
+      song: selectedSong.id,
+      film: selectedFilm.id,
+      usage: usage,
+    });
+    navigate(`/songs/${selectedSong.id}`);
   };
 
   if (!films) return <h1>Loading...</h1>;

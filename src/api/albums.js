@@ -11,3 +11,13 @@ export const createAlbum = async (albumData) => {
   const { data } = await axios.request(options);
   return data;
 };
+
+export const getAllAlbums = async () => {
+  const options = {
+    method: 'GET',
+    url: `${baseUrl}/song-to-film/album-list/`,
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};
