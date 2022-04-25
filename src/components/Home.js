@@ -8,6 +8,8 @@ import { Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { getAllSongs } from '../api/songs';
 import { Link } from 'react-router-dom';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 
 const Home = () => {
   const [songs, setSongs] = React.useState(null);
@@ -39,7 +41,7 @@ const Home = () => {
           component="form"
           sx={{
             maxWidth: '100%',
-            width: '500px',
+            width: '100%',
           }}
           noValidate
           onSubmit={handleSubmit}
@@ -64,24 +66,23 @@ const Home = () => {
             className="my-10"
           />
 
-          <Carousel sx={{ maxWidth: 500, Height: 10000 }}>
+          <Splide
+            aria-labelledby="Songs Such As"
+            options={{
+              rewind: true,
+              width: 800,
+              gap: '1rem',
+              perPage: 3,
+            }}
+          >
             {songs.map((song) => (
-              <Box key={song.id} sx={{ maxWidth: 345, maxHeight: 250 }}>
-                <CardActionArea sx={{ maxHeight: 300, maxWidth: 300 }}>
-                  <Link to={`/songs/${song.id}`}>
-                    <CardMedia
-                      component="img"
-                      height="100%"
-                      width="100%"
-                      image={song.album.image}
-                      alt={song.title}
-                      sx={{ maxHeight: 400, maxWidth: 400 }}
-                    />
-                  </Link>
-                </CardActionArea>
-              </Box>
+              <SplideSlide key={song.id}>
+                <Link to={`/songs/${song.id}`}>
+                  <img src={song.album.image} alt={song.name} />
+                </Link>
+              </SplideSlide>
             ))}
-          </Carousel>
+          </Splide>
         </Box>
       </Container>
     </>
