@@ -63,7 +63,7 @@ const Login = () => {
               id="outlined-basic"
               label="Email"
               variant="outlined"
-              type="text"
+              type="email"
               value={emailValue}
               onChange={handleEmailChange}
             />

@@ -22,16 +22,24 @@ const ArtistList = () => {
 
   return (
     <>
-      <h1>All Artists</h1>
+      <Typography
+        gutterBottom
+        variant="h3"
+        component="div"
+        className="text-center"
+      >
+        All Artists
+      </Typography>
       {artists ? (
-        <div className="container mx-auto px-10 flex">
+        <div className="container mx-auto px-10 flex flex-wrap basis-1/3">
           {artists.map((artist) => (
-            <Card className="mx-10" key={artist.id} sx={{ maxWidth: 345 }}>
+            <Card className="mx-10" key={artist.id} sx={{ maxWidth: 200 }}>
               <CardActionArea>
                 <Link to="/">
                   <CardMedia
                     component="img"
-                    height="140"
+                    maxHeight="100px"
+                    maxWidth="100px"
                     image={artist.image}
                     alt={artist.title}
                   />
@@ -39,19 +47,10 @@ const ArtistList = () => {
                     <Typography gutterBottom variant="h5" component="div">
                       {artist.name}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {/* Lizards are a widespread group of squamate reptiles,
-                        with over 6,000 species, ranging across all continents
-                        except Antarctica */}
-                    </Typography>
                   </CardContent>
                 </Link>
               </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Like
-                </Button>
-              </CardActions>
+              <CardActions></CardActions>
             </Card>
           ))}
         </div>

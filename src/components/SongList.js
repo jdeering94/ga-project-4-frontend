@@ -32,16 +32,24 @@ const SongList = () => {
 
   return (
     <>
-      <h1>All Songs</h1>
+      <Typography
+        gutterBottom
+        variant="h3"
+        component="div"
+        className="text-center"
+      >
+        All Songs
+      </Typography>
 
       <div className="container mx-auto px-10 flex flex-wrap basis-1/3">
         {songs.map((song) => (
-          <Card className="mx-10" key={song.id} sx={{ maxWidth: 345 }}>
+          <Card className="m-5" key={song.id} sx={{ maxWidth: 200 }}>
             <CardActionArea>
               <Link to={`/songs/${song.id}`}>
                 <CardMedia
                   component="img"
-                  height="140"
+                  maxHeight="100px"
+                  maxWidth="100px"
                   image={song.album.image}
                   alt={song.name}
                 />
@@ -72,7 +80,7 @@ const SongList = () => {
                 gutterBottom
                 variant="h5"
                 component="div"
-                className="px-10"
+                className="text-sm text-center"
               >
                 ❤️{song.liked_by.length}
               </Typography>

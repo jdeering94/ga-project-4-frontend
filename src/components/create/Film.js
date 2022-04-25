@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 const Film = () => {
   const navigate = useNavigate();
   const [filmTitle, setFilmTitle] = React.useState('');
-  const [filmYear, setFilmYear] = React.useState(0);
+  const [filmYear, setFilmYear] = React.useState('');
   const [director, setDirector] = React.useState('');
   const [filmImage, setFilmImage] = React.useState('');
 

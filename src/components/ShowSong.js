@@ -9,7 +9,7 @@ import { getSongById } from '../api/songs';
 import { Link } from 'react-router-dom';
 import { getAllContextsForSong } from '../api/contexts';
 import { getUserData } from '../api/auth';
-import { isLiked } from '../lib/favourites';
+import { isLiked, averageRating } from '../lib/favourites';
 import { addLikedSong, removeLikedSong } from '../api/auth';
 import Spotify from 'react-spotify-embed';
 
@@ -60,6 +60,8 @@ const ShowSong = () => {
       setUserData(user);
     }
   };
+
+  console.log(songContexts);
 
   return (
     <>
@@ -135,6 +137,8 @@ const ShowSong = () => {
                               color="text.secondary"
                             >
                               {context.usage}
+                              <br />
+                              Average Rating: {averageRating(context)}
                             </Typography>
                           ))}
                       </CardContent>

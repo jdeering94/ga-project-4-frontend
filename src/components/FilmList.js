@@ -24,16 +24,24 @@ const FilmList = () => {
 
   return (
     <>
-      <h1>All Films</h1>
+      <Typography
+        gutterBottom
+        variant="h3"
+        component="div"
+        className="text-center"
+      >
+        All Films
+      </Typography>
       {films ? (
-        <div className="container mx-auto px-10 flex">
+        <div className="container mx-auto px-10 flex flex-wrap basis-1/3">
           {films.map((film) => (
-            <Card className="mx-10" key={film.id} sx={{ maxWidth: 345 }}>
+            <Card className="mx-10" key={film.id} sx={{ maxWidth: 200 }}>
               <CardActionArea>
                 <Link to={`/films/${film.id}`}>
                   <CardMedia
                     component="img"
-                    height="140"
+                    maxHeight="100px"
+                    maxWidth="100px"
                     image={film.image}
                     alt={film.title}
                   />
@@ -49,11 +57,6 @@ const FilmList = () => {
                   </CardContent>
                 </Link>
               </CardActionArea>
-              <CardActions>
-                <Button size="small" color="primary">
-                  Like
-                </Button>
-              </CardActions>
             </Card>
           ))}
         </div>

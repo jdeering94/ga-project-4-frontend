@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import { getFilmById } from '../api/films';
 import { getUserData } from '../api/auth';
 import { getAllContextsForFilm } from '../api/contexts';
+import { averageRating } from '../lib/favourites';
 
 const ShowSong = () => {
   const { filmId } = useParams();
@@ -88,6 +89,8 @@ const ShowSong = () => {
                               color="text.secondary"
                             >
                               {context.usage}
+                              <br />
+                              Average Rating: {averageRating(context)}
                             </Typography>
                           ))}
                       </CardContent>
