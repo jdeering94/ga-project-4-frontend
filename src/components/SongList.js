@@ -27,14 +27,14 @@ const SongList = () => {
   }, []);
 
   if (!songs) return <h1>Loading...</h1>;
-  if (!userData) return <h1>Loading</h1>;
-  console.log(userData.liked_songs[0].id);
+  // if (!userData) return <h1>Loading</h1>;
+  // console.log(userData.liked_songs[0].id);
 
   return (
     <>
       <h1>All Songs</h1>
 
-      <div className="container mx-auto px-10 flex">
+      <div className="container mx-auto px-10 flex flex-wrap basis-1/3">
         {songs.map((song) => (
           <Card className="mx-10" key={song.id} sx={{ maxWidth: 345 }}>
             <CardActionArea>

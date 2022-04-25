@@ -39,3 +39,17 @@ export const createContext = async (contextData) => {
   const { data } = await axios.request(options);
   return data;
 };
+
+export const createContextRating = async (reviewData) => {
+  const options = {
+    method: 'POST',
+    url: `${baseUrl}/reviews/create/`,
+    data: reviewData,
+    headers: {
+      authorization: `Bearer ${window.sessionStorage.getItem('token')}`,
+    },
+  };
+
+  const { data } = await axios.request(options);
+  return data;
+};
