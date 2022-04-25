@@ -3,15 +3,17 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CardActions, Button, Container } from '@mui/material';
+import { Rating } from '@mui/material';
+import { CardActionArea, CardActions, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { getFilmById } from '../api/films';
 import { getUserData } from '../api/auth';
 import { getAllContextsForFilm } from '../api/contexts';
 import { averageRating } from '../lib/favourites';
+import { createContextRating } from '../api/contexts';
 
-const ShowSong = () => {
+const ShowFilm = () => {
   const { filmId } = useParams();
   const [film, setFilm] = React.useState(null);
   const [filmContexts, setFilmContexts] = React.useState(null);
@@ -32,8 +34,6 @@ const ShowSong = () => {
     getData();
   }, []);
 
-  console.log(film);
-
   if (!film) {
     return <p>Loading...</p>;
   }
@@ -41,19 +41,13 @@ const ShowSong = () => {
   return (
     <>
       <Container maxWidth="sm" className="bg-slate-200 shadow">
-        <h1 className="font-semibold">{film.title}</h1>
-        <div className="image m-10">
-          {/* <Card> */}
-          <CardMedia
-            component="img"
-            height="200"
-            image={film.image}
-            alt={film.title}
-            sx={{ maxHeight: 400, maxWidth: 300 }}
-          />
-          {/* </Card> */}
+        <h1 className="font-semibold text-center p-5">{film.title}</h1>
+        <div className="image justify-center">
+          <figure>
+            <img src={film.image} alt={film.title} />
+          </figure>
         </div>
-        <div className="flex">
+        <div className="flex justify-center">
           <div className="information card">
             <p>
               <strong>Director:</strong> {film.director}
@@ -64,7 +58,11 @@ const ShowSong = () => {
             <div className="film-info">
               <strong>Songs that Appear in {film.title}:</strong>
               {film.songs.map((song) => (
-                <Card key={song.name} sx={{ maxWidth: 345, maxHeight: 250 }}>
+                <Card
+                  key={song.name}
+                  sx={{ maxWidth: 400, maxHeight: 300, width: '100%' }}
+                  className="m-1 justify-center flex-col"
+                >
                   <CardActionArea>
                     <Link to={`/songs/${song.id}`}>
                       <CardMedia
@@ -96,6 +94,31 @@ const ShowSong = () => {
                       </CardContent>
                     </Link>
                   </CardActionArea>
+                  {userData && (
+                    <CardActions>
+                      {filmContexts
+                        ?.filter((item) => item.film.id === film.id)
+
+                        .map((context) => (
+                          <Rating
+                            key={context.id}
+                            name="no-value"
+                            value={null}
+                            max={10}
+                            onChange={async (event, newValue) => {
+                              createContextRating({
+                                usage: context.id,
+                                rating: newValue,
+                              });
+                              const contextData = await getAllContextsForFilm(
+                                filmId
+                              );
+                              setFilmContexts(contextData);
+                            }}
+                          />
+                        ))}
+                    </CardActions>
+                  )}
                 </Card>
               ))}
             </div>
@@ -106,4 +129,4 @@ const ShowSong = () => {
   );
 };
 
-export default ShowSong;
+export default ShowFilm;

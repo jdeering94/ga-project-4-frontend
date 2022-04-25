@@ -47,14 +47,14 @@ export default function Navbar({ fixed }) {
             id="example-navbar-danger"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   to="/about"
                   className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
                 >
                   About
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <PopupState variant="popover" popupId="demo-popup-menu">
                   {(popupState) => (
@@ -86,9 +86,11 @@ export default function Navbar({ fixed }) {
                         User
                       </Button>
                       <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={popupState.close}>
-                          <Link to="/register">Sign Up</Link>
-                        </MenuItem>
+                        {!userId && (
+                          <MenuItem onClick={popupState.close}>
+                            <Link to="/register">Sign Up</Link>
+                          </MenuItem>
+                        )}
                         {!userId && (
                           <MenuItem onClick={popupState.close}>
                             <Link to="/login">Login</Link>
@@ -96,7 +98,9 @@ export default function Navbar({ fixed }) {
                         )}
                         {userId && (
                           <MenuItem onClick={popupState.close}>
-                            <Link to={'/users/profile/'}>{username}</Link>
+                            <Link to={'/users/profile/'}>
+                              {username}'s Favs
+                            </Link>
                           </MenuItem>
                         )}
                         {userId && (

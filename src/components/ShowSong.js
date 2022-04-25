@@ -3,14 +3,16 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import { Rating } from '@mui/material';
 import { CardActionArea, CardActions, Button, Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { getSongById } from '../api/songs';
 import { Link } from 'react-router-dom';
 import { getAllContextsForSong } from '../api/contexts';
 import { getUserData } from '../api/auth';
-import { isLiked, averageRating } from '../lib/favourites';
+import { averageRating } from '../lib/favourites';
 import { addLikedSong, removeLikedSong } from '../api/auth';
+import { createContextRating } from '../api/contexts';
 import Spotify from 'react-spotify-embed';
 
 const ShowSong = () => {
@@ -18,7 +20,6 @@ const ShowSong = () => {
   const [song, setSong] = React.useState(null);
   const [songContexts, setSongContexts] = React.useState(null);
   const [userData, setUserData] = React.useState(null);
-  // const [liked, setLiked] = React.useState(null);
 
   React.useEffect(() => {
     const getData = async () => {
@@ -30,7 +31,6 @@ const ShowSong = () => {
       if (window.sessionStorage.token) {
         const user = await getUserData();
         setUserData(user);
-        // setLiked(isLiked(user, songdata));
       }
     };
     getData();
@@ -39,6 +39,8 @@ const ShowSong = () => {
   if (!song) {
     return <p>Loading...</p>;
   }
+
+  console.log(songContexts);
 
   const handleLikeButton = async () => {
     if (
@@ -61,22 +63,17 @@ const ShowSong = () => {
     }
   };
 
-  console.log(songContexts);
-
   return (
     <>
-      <h1>this is a song page for {song.name}</h1>
-      <Container maxWidth="sm">
-        <div className="image m-10">
-          {/* <Card> */}
-          <CardMedia
-            component="img"
-            height="140"
-            image={song.album.image}
-            alt={song.name}
-            sx={{ maxHeight: 300, maxWidth: 300 }}
-          />
-          {/* </Card> */}
+      <Container
+        maxWidth="sm"
+        className="bg-slate-200 shadow flex-col justify-center p-5"
+      >
+        <h1 className="font-semibold text-center p-5">{song.name}</h1>
+        <div className="image justify-center">
+          <figure>
+            <img src={song.album.image} alt={song.name} />
+          </figure>
           <CardActions>
             {userData && (
               <Button size="small" color="primary" onClick={handleLikeButton}>
@@ -92,7 +89,6 @@ const ShowSong = () => {
         </div>
         <div className="flex">
           <div className="information card">
-            <h2 className="name">{song.name}</h2>
             <p>
               <strong>Artist:</strong> {song.artist.name}
             </p>
@@ -109,10 +105,17 @@ const ShowSong = () => {
             <p>
               <strong>Likes:</strong> {song.liked_by.length}
             </p>
-            <div className="film-info">
+            <p>
               <strong>Used in:</strong>
+            </p>
+            <div className="film-info flex flex-wrap justify-center">
+              <br />
               {song.films.map((film) => (
-                <Card key={film.title} sx={{ maxWidth: 345, maxHeight: 250 }}>
+                <Card
+                  key={film.title}
+                  sx={{ maxWidth: 400, maxHeight: 300, width: '100%' }}
+                  className="m-1 justify-center flex-col"
+                >
                   <CardActionArea>
                     <Link to={`/films/${film.id}`}>
                       <CardMedia
@@ -131,19 +134,60 @@ const ShowSong = () => {
                           ?.filter((item) => item.film.id === film.id)
 
                           .map((context) => (
-                            <Typography
-                              key={context.id}
-                              variant="body2"
-                              color="text.secondary"
-                            >
-                              {context.usage}
-                              <br />
-                              Average Rating: {averageRating(context)}
-                            </Typography>
+                            <>
+                              <Typography
+                                key={context.id}
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                Average Rating: {averageRating(context)}
+                                <br />
+                                {context.usage}
+                              </Typography>
+                            </>
                           ))}
                       </CardContent>
                     </Link>
                   </CardActionArea>
+                  {userData && (
+                    <CardActions>
+                      {songContexts
+                        ?.filter((item) => item.film.id === film.id)
+
+                        .map((context) => (
+                          <>
+                            <div key={context.id}>
+                              <Rating
+                                name="no-value"
+                                value={null}
+                                max={10}
+                                onChange={async (event, newValue) => {
+                                  createContextRating({
+                                    usage: context.id,
+                                    rating: newValue,
+                                  });
+                                  const contextData =
+                                    await getAllContextsForSong(songId);
+                                  setSongContexts(contextData);
+                                }}
+                              />
+                              {/* <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
+                                Your Rating:
+                                {context.reviews.length > 0
+                                  ? userData.reviews.filter(
+                                      (filteredReview) =>
+                                        filteredReview.usage === context.id
+                                    )[0].rating
+                                  : 'not rated'}
+                              </Typography> */}
+                            </div>
+                          </>
+                        ))}
+                    </CardActions>
+                  )}
                 </Card>
               ))}
             </div>
