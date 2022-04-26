@@ -73,8 +73,10 @@ const Home = () => {
               width: 800,
               gap: '1rem',
               perPage: 3,
-              interval: 500,
+              interval: 4000,
               autoplay: true,
+              perMove: 1,
+              type: 'loop',
             }}
           >
             {songs.map((song) => (
