@@ -32,7 +32,7 @@ const Home = () => {
     navigate(`/songs/${selectedSong.id}`);
   };
 
-  if (!songs) return <h1>Loading/...</h1>;
+  if (!songs) return <h1>Loading...</h1>;
 
   return (
     <>

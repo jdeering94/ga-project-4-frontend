@@ -31,12 +31,12 @@ const Profile = () => {
         >
           Liked Songs
         </Typography>
-        <div className="flex m-10">
+        <div className="flex m-10 flex-wrap">
           {userData.liked_songs.map((song) => (
             <Card
               key={song.id}
-              sx={{ maxWidth: 345, maxHeight: 345 }}
-              className="mx-10"
+              sx={{ maxWidth: 150, maxHeight: 150 }}
+              className="m-5"
             >
               <CardActionArea>
                 <Link to={`/songs/${song.id}`}>
